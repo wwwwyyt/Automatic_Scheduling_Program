@@ -65,9 +65,11 @@ for i in range(len(employee), len(on_duty_time) + len(employee)):
     on_duty_time_table[i] = on_duty_time[i - len(employee)]
 
 # 创建二部图：可值班时间的二部图
+EMPLOYEE = 0  # 二部图中employee顶点集合的序号
+ON_DUTY_TIME = 1  # 二部图中on_duty_time顶点集合的序号
 is_workable = nx.Graph()
-is_workable.add_nodes_from(range(len(employee)), bipartite=0)
-is_workable.add_nodes_from(range(len(employee), len(on_duty_time) + len(employee)), bipartite=1)
+is_workable.add_nodes_from(range(len(employee)), bipartite=EMPLOYEE)
+is_workable.add_nodes_from(range(len(employee), len(on_duty_time) + len(employee)), bipartite=ON_DUTY_TIME)
 for i in range(1, line_count):
     for j in range(2, col_count):
         if table[i][j] == '是':
@@ -85,19 +87,22 @@ for duty_time in on_duty_time:
 # 进行求“最大匹配 - 删除最大匹配 - 再次求最大匹配”的迭代
 # 需要几组人员就进行几次迭代
 GROUP_NUM = 10  # 默认有每个时间段需要两组人员
-EMPLOYEE = 1  # 二部图中employee顶点集合的序号
-ON_DUTY_TIME = 0  # 二部图中on_duty_time顶点集合的序号
 for i in range(GROUP_NUM):
     # 求二部图的最大匹配
-    matching = nx.max_weight_matching(is_workable, maxcardinality=True)
+    matching = nx.maximal_matching(is_workable)
 
     # 将二部图的最大匹配加入值班安排表格
     for edge in matching:
+
         # 获取一种值班组合（时间 - 人员）
         a = edge[ON_DUTY_TIME]
         b = edge[EMPLOYEE]
         time = on_duty_time_table[a]
         member = employee_table[b]
+
+        # 当值班次数已经达到2或者已经在上午值班，不要添加该值班组合
+        if on_duty_count[member] == 2 or on_duty_in_the_morning_count[member] == 1:
+            continue
 
         # 将该值班组合加入值班安排表格
         schedule_table[time].append(member)
