@@ -36,7 +36,7 @@ class BipartiteGraph:
     def remove_edge(self, a_index: int, b_index: int):
         self.g.remove_edge(a_index, b_index)
 
-    def remove_edges(self, edge_set):
+    def remove_edges(self, edge_set: tuple):
         for edge in edge_set:
             a_index = edge[self.v_a]
             b_index = edge[self.v_b]
