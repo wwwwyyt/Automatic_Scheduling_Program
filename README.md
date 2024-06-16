@@ -20,7 +20,7 @@
 
 使用excel表格，得到如下格式的文件"data.txt"：
 
-![数据文件格式](E:\My%20Projects\Python\2024-05-30\Automatic_Scheduling_Program\数据文件格式.png)
+![数据文件格式](./数据文件格式.png)
 
 ## 数据输出
 
