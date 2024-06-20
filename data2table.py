@@ -17,6 +17,7 @@ class Table:
             self.table = tuple(self.table)
         except ValueError as e:
             print(e)
+            x = input('程序错误终止，按任意键退出...')
 
     # 检查格式
     def __check_format(self):

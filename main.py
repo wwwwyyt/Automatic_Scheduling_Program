@@ -83,3 +83,6 @@ with open('值班安排结果.txt', 'w') as outfile:
             for members in group_on_each_place_on_each_time[time][0][place]:
                 outfile.write(members + ' ')
             outfile.write('\n')
+    print('\n值班安排结果.txt文件已生成')
+
+x = input('按任意键退出...')
