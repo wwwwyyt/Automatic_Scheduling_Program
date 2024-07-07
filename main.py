@@ -38,7 +38,8 @@ def main():
         for name in member_names:
             member = [d for d in employees if d.get('name') == name]
             members.append(member[0])
-        employee_weight_matrix = mat.create_employee_weight_matrix(tuple(members), on_duty_place)  # 生成该小组中每个成员值班的成本
+        # 生成该小组中每个成员值班的成本
+        employee_weight_matrix = mat.create_employee_weight_matrix(tuple(members), on_duty_place)
 
         # 计算二部图最小权匹配
         employee_weight = wbg.WeightedBipartiteGraph(tuple(member_names), on_duty_place, employee_weight_matrix)
@@ -51,6 +52,7 @@ def main():
             employee_weight.remove_edges(edges_to_remove)  # 删除已安排的人员与值班地点组合
             for u in matching_name:
                 group_on_each_place[u[employee_weight.v_col]].append(u[employee_weight.v_row])
+
         group_on_each_place_on_each_time[each_time].append(group_on_each_place)
 
     # 向控制台输出
