@@ -1,7 +1,6 @@
-# 定义Table类
 class Table:
     # 初始化方法，默认从data.txt初始化
-    def __init__(self, infile_name='data.txt'):
+    def __init__(self, data):
         with open(infile_name, 'r', encoding='utf-8') as infile:
             self.infile_lines = infile.readlines()
 
